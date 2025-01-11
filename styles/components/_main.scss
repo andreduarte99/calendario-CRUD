@@ -1,0 +1,97 @@
+@use "../abstract/variaveis";
+@use "../abstract/mixins";
+
+/* Estilos gerais do formulário e botão */
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+
+  label {
+    font-size: 1.2rem;
+  }
+
+  .input-nome {
+    height: 1.5rem;
+    width: 30rem;
+  }
+
+  .input-data {
+    height: 1.5rem;
+    width: 7rem;
+  }
+
+  .btn {
+    padding: 0.5rem 2rem;
+    background-color: cornflowerblue;
+    color: white;
+    font-size: 1rem;
+    border: 1px solid cornflowerblue; /* Borda para garantir que o tamanho não mude */
+    border-radius: 0.5rem;
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease; /* Adiciona uma transição suave nas cores */
+
+    &:hover {
+      color: cornflowerblue;
+      background-color: white;
+      border-color: black; /* Mudança apenas da cor da borda */
+      cursor: pointer;
+    }
+  }
+}
+
+/* Estilos da tabela */
+.tabela {
+  border-collapse: separate;
+  border-spacing: 0.5rem; /* Espaçamento entre as colunas */
+  width: 100%;
+  margin: 20px 0;
+
+  & th,
+  & td {
+    padding: 0.2rem;
+    text-align: left; /* Alinha o texto à esquerda */
+  }
+}
+
+/* Botão editar */
+.btn-editar {
+  padding: 0.5rem 1rem; /* Ajusta o padding para garantir consistência */
+  background-color: green;
+  color: white;
+  font-size: 1rem;
+  border: 1px solid green; /* Borda consistente */
+  border-radius: 0.5rem;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+
+  &:hover {
+    color: green;
+    background-color: white;
+    border-color: black;
+    cursor: pointer;
+  }
+}
+
+/* Botão excluir */
+.btn-excluir {
+  padding: 0.5rem 1rem;
+  background-color: red;
+  color: white;
+  font-size: 1rem;
+  border: 1px solid red; /* Borda consistente */
+  border-radius: 0.5rem;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+
+  &:hover {
+    color: red;
+    background-color: white;
+    border-color: black;
+    cursor: pointer;
+  }
+}

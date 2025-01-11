@@ -2,6 +2,7 @@ const form = document.querySelector(".js-form");
 const nomeInput = document.getElementById("name");
 const data = document.getElementById("birth-date");
 const salvarPessoa = document.getElementById("js-salvar");
+const elementosTabela = document.getElementById("elementos-tabela");
 
 let pessoas = [];
 try {
@@ -14,16 +15,26 @@ try {
   pessoas = [];
 }
 
+atualizarTabela();
+
 nomeInput.addEventListener("input", () => {
-  if (!nomeInput.value.match(/^[A-Za-zÀ-ÖØ-öø-ÿ´^~\s]+$/)) {
+  const regex = /^[A-Za-zÀ-ÖØ-öø-ÿáéíóúàèìòùâêîôûãõäëïöüàáç\s]+$/;
+  if (!regex.test(nomeInput.value)) {
     nomeInput.setCustomValidity("O nome do usuário deve conter apenas letras.");
   } else {
     nomeInput.setCustomValidity("");
   }
+  nomeInput.reportValidity(); // Mostra a mensagem de validação no momento da digitação
 });
 
 salvarPessoa.addEventListener("click", (evento) => {
   evento.preventDefault();
+
+  //Verifique se o formulário é válido
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
 
   if (!nomeInput.value || !data.value) {
     alert("Por favor, preencha todos os campos.");
@@ -38,5 +49,24 @@ salvarPessoa.addEventListener("click", (evento) => {
   nomeInput.value = "";
   data.value = "";
 
+  atualizarTabela();
+
   console.log("Pessoa salva com sucesso!", pessoas);
 });
+
+function atualizarTabela() {
+  elementosTabela.innerHTML = "";
+
+  pessoas.forEach((pessoa, index) => {
+    elementosTabela.innerHTML += `<tr>
+    <td>${pessoa.nome}</td>
+    <td>${pessoa.dataNascimento}</td>
+    <td>
+      <button class="btn-editar" onclick="" data-id="${index}" >Editar</button>
+    </td>
+    <td>
+      <button class="btn-excluir" onclick="">Excluir</button>
+    </td>
+  </tr>`;
+  });
+}
