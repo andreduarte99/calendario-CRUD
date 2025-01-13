@@ -5,6 +5,8 @@ const salvarPessoa = document.getElementById("js-salvar");
 const elementosTabela = document.getElementById("elementos-tabela");
 
 let pessoas = [];
+let idEdicao = null; // Variável para rastrear qual pessoa está sendo editada
+
 try {
   pessoas = JSON.parse(localStorage.getItem("pessoas")) || [];
   if (!Array.isArray(pessoas)) {
@@ -43,7 +45,15 @@ salvarPessoa.addEventListener("click", (evento) => {
 
   const dadosDaPessoa = { nome: nomeInput.value, dataNascimento: data.value };
 
-  pessoas.push(dadosDaPessoa);
+  if (idEdicao !== null) {
+    // Se estamos editando, atualizamos os valores da pessoa
+    pessoas[idEdicao] = dadosDaPessoa;
+    idEdicao = null; //Resetamos o modo de edição
+  } else {
+    //Se estamos adicionando uma nova pessoa
+    pessoas.push(dadosDaPessoa);
+  }
+
   localStorage.setItem("pessoas", JSON.stringify(pessoas));
 
   nomeInput.value = "";
@@ -62,11 +72,25 @@ function atualizarTabela() {
     <td>${pessoa.nome}</td>
     <td>${pessoa.dataNascimento}</td>
     <td>
-      <button class="btn-editar" onclick="" data-id="${index}" >Editar</button>
-    </td>
-    <td>
-      <button class="btn-excluir" onclick="">Excluir</button>
+      <button  class="btn-editar"  data-id="${index}" >Editar</button>
+      <button  class="btn-excluir" data-id="${index}">Excluir</button>
     </td>
   </tr>`;
+  });
+
+  adicionarEventosEdicao();
+}
+
+function adicionarEventosEdicao() {
+  const botosEditar = document.querySelectorAll(".btn-editar");
+
+  botosEditar.forEach((btn) => {
+    btn.addEventListener("click", (evento) => {
+      const id = evento.target.getAttribute("data-id");
+      console.log(id);
+      idEdicao = id; //Salva o índice do item que está sendo editado
+      nomeInput.value = pessoas[id].nome;
+      data.value = pessoas[id].dataNascimento;
+    });
   });
 }
