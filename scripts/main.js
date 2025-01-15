@@ -79,18 +79,33 @@ function atualizarTabela() {
   });
 
   adicionarEventosEdicao();
+  excluirItem();
 }
 
 function adicionarEventosEdicao() {
-  const botosEditar = document.querySelectorAll(".btn-editar");
+  const botoesEditar = document.querySelectorAll(".btn-editar");
 
-  botosEditar.forEach((btn) => {
+  botoesEditar.forEach((btn) => {
     btn.addEventListener("click", (evento) => {
       const id = evento.target.getAttribute("data-id");
       console.log(id);
       idEdicao = id; //Salva o índice do item que está sendo editado
       nomeInput.value = pessoas[id].nome;
       data.value = pessoas[id].dataNascimento;
+    });
+  });
+}
+
+function excluirItem() {
+  const botoesExcluir = document.querySelectorAll(".btn-excluir");
+
+  botoesExcluir.forEach((btn) => {
+    btn.addEventListener("click", (evento) => {
+      const id = evento.target.getAttribute("data-id");
+      console.log(id);
+      pessoas.splice(id, 1);
+      localStorage.setItem("pessoas", JSON.stringify(pessoas)); // Atualiza o localStorage
+      atualizarTabela(); // Atualiza a tabela na interface
     });
   });
 }
